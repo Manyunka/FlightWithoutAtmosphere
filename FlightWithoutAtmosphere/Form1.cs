@@ -31,9 +31,9 @@ namespace FlightWithoutAtmosphere
 
 			chart1.Series[0].Points.AddXY(x, y);
 
-			time += 0.01;
-
 			timeLabel.Text = "Time: " + time.ToString("0.00") + " c";
+
+			time += 0.01;
 
 			if (y <= 0)
 			{
@@ -69,9 +69,11 @@ namespace FlightWithoutAtmosphere
 
 				decimal fT = (v0 * sina + (decimal)Math.Sqrt((double)(v0 * v0 * sina * sina + 2 * g * y0))) / g;
 
-				chart1.ChartAreas[0].AxisY.Maximum = (double)(y0 + v0 * v0 * sina * sina / (2 * g));
+				double maxH = (double)(y0 + v0 * v0 * sina * sina / (2 * g));
+				chart1.ChartAreas[0].AxisY.Maximum = maxH > 1 ? maxH : 1;
 
-				chart1.ChartAreas[0].AxisX.Maximum = (double)(v0 * fT * cosa);
+				double S = (double)(v0 * fT * cosa);
+				chart1.ChartAreas[0].AxisX.Maximum = S > 1 ? S : 1;
 
 				flag = true;
 
